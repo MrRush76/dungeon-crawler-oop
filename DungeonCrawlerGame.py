@@ -1,7 +1,6 @@
 import sys
-import time
 import random
-
+import json
 directions_map: dict[str:str] = {
     "up": "down",
     "down": "up",
@@ -47,6 +46,12 @@ class Weapon(Loot):
 
     def slow_print(self) -> None:
         print_slow(f"This is a '{self.name}' and it is '{self.description}' and it is worth '{self.value}' and it does '{self.damage}' damage")
+
+# class Potion(Loot):
+#     def __init__(self, given_name: str, given_desc: str, given_value: int, given_effect: int):
+#         super().__init__(given_name, given_desc, given_value)
+#         self.effect: str = given_effect
+#
 
 class NPC:
     def __init__(self, given_name: str, given_desc: str):
@@ -210,17 +215,22 @@ class Player:
 final_key: Item = Item("Final Key", "A key that unlocks the final room")
 room_spawn: Room = Room("Spawn", "The starting room")
 player_1: Player = Player("Player 1", room_spawn)
-room_2: Room = Room("Hall of Echoes", "A hall where every sound is amplified")
-room_3: Room = Room("Chamber of Whispers", "A chamber filled with eerie whispers")
-room_4: Room = Room("Hall of Shadows", "A hall where shadows seem to move on their own")
-room_5: Room = Room("Guard Room", "A room where guards once stood watch")
-room_6: Room = Room("Armory", "A room filled with old weapons and armor")
-room_7: Room = Room("Torture Chamber", "A room with old torture devices")
-room_8: Room = Room("Storage Room", "A cluttered room filled with old supplies")
-room_9: Room = Room("Alchemy Lab", "A room with various potions and alchemical equipment")
-room_10: Room = Room("Control Room", "A room with old control panels and monitors")
-room_11: Room = Room("Dungeon Cell 1", "A dark cell with iron bars")
-room_12: Room = Room("Dungeon Cell 2", "A cell with broken chains and shackles")
+with open('generate.json', 'r') as file:
+    data = json.load(file)
+
+rooms_data = data['rooms']
+random_rooms = random.sample(rooms_data, 13)
+room_2: Room = Room(random_rooms[0]['name'], random_rooms[0]['description'])
+room_3: Room = Room(random_rooms[1]['name'], random_rooms[1]['description'])
+room_4: Room = Room(random_rooms[2]['name'], random_rooms[2]['description'])
+room_5: Room = Room(random_rooms[3]['name'], random_rooms[3]['description'])
+room_6: Room = Room(random_rooms[4]['name'], random_rooms[4]['description'])
+room_7: Room = Room(random_rooms[5]['name'], random_rooms[5]['description'])
+room_8: Room = Room(random_rooms[6]['name'], random_rooms[6]['description'])
+room_9: Room = Room(random_rooms[7]['name'], random_rooms[7]['description'])
+room_10: Room = Room(random_rooms[8]['name'], random_rooms[8]['description'])
+room_11: Room = Room(random_rooms[9]['name'], random_rooms[9]['description'])
+room_12: Room = Room(random_rooms[10]['name'], random_rooms[10]['description'])
 room_13: Room = Room("Final Room", "A room with flickering torches", True, final_key)
 
 room_spawn.connect_room(room_2, "right")
@@ -246,50 +256,27 @@ room_12.connect_room(room_3, "right")
 
 
 
+random_loot = random.sample(data['items'], 6)
+for loot in random_loot:
+    item = Loot(loot['name'], loot['description'], loot['value'])
+    random.choice([room_2, room_3, room_4, room_5, room_6, room_7, room_8, room_9, room_10, room_11, room_12]).add_existing_item(item)
 
-item_gem: Loot = Loot("Gem", "A sparkling gem", 200)
-item_potion: Loot = Loot("Potion", "A healing potion", 75)
-item_scroll: Loot = Loot("Scroll", "A scroll with ancient writings", 150)
-room_8.add_existing_item(item_gem)
-room_8.add_existing_item(item_potion)
-room_8.add_existing_item(item_scroll)
-room_8.add_existing_item(Loot("Golden Crown", "A crown adorned with precious gems", 500))
-room_8.add_existing_item(Loot("Ancient Coin", "A rare coin from a lost civilization", 300))
-room_8.add_existing_item(Loot("Jeweled Dagger", "A dagger with a jeweled hilt", 250))
+random_weapons = random.sample(data['weapons'], 6)
+for weapon in random_weapons:
+    item = Weapon(weapon['name'], weapon['description'], weapon['value'], weapon['damage'])
+    random.choice([room_2, room_3, room_4, room_5, room_6, room_7, room_8, room_9, room_10, room_11, room_12]).add_existing_item(item)
 
+random_npcs = random.sample(data['npcs'], 4)
+keys = ["Dungeon Key of Wisdom", "Dungeon Key of Strength", "Dungeon Key of Agility", "Dungeon Key of Intelligence"]
+for npc_data, key in zip(random_npcs, keys):
+    npc = NPC(npc_data['name'], npc_data['description'])
+    key_item = Loot(key, f"A key that represents {key.split()[-1].lower()}", 50)
+    npc.add_loot(key_item)
+    random_room = random.choice([room_2, room_3, room_4, room_5, room_6, room_7, room_8, room_9, room_10, room_11, room_12])
+    while random_room.check_npc():
+        random_room = random.choice([room_2, room_3, room_4, room_5, room_6, room_7, room_8, room_9, room_10, room_11, room_12])
+    random_room.add_npc(npc)
 
-sword_1 = Weapon("Excalibur", "A legendary sword with immense power", 500, 50)
-sword_2 = Weapon("Shadow Blade", "A dark sword that drains the life of its enemies", 300, 35)
-sword_3 = Weapon("Flame Sword", "A sword engulfed in flames", 400, 45)
-bow = Weapon("Elven Bow", "A finely crafted bow with great accuracy", 250, 30)
-staff = Weapon("Wizard's Staff", "A staff imbued with magical energy", 350, 40)
-axe = Weapon("Battle Axe", "A heavy axe with a sharp blade", 200, 25)
-dagger = Weapon("Poison Dagger", "A small dagger coated with poison", 150, 20)
-mace = Weapon("War Mace", "A spiked mace for crushing armor", 300, 40)
-
-
-npc_1: NPC = NPC("Gorath the Keeper", "A mysterious figure with a hooded cloak and piercing eyes")
-npc_1.add_loot(Loot("Gold Ring", "A shiny gold ring", 100))
-npc_1.add_loot(Loot("Dungeon Key of Wisdom", "A key with ancient runes", 50))
-room_2.add_npc(npc_1)
-
-npc_2: NPC = NPC("Tharok the Mighty", "A towering warrior with bulging muscles and a fierce expression")
-npc_2.add_loot(Loot("Silver Necklace", "A delicate silver necklace", 75))
-npc_2.add_loot(Loot("Dungeon Key of Strength", "A key with a lion emblem", 50))
-npc_2.add_loot(axe)
-room_4.add_npc(npc_2)
-
-npc_3: NPC = NPC("Lyra the Shadow", "A nimble rogue with quick reflexes and a mischievous grin")
-npc_3.add_loot(Loot("Bronze Coin", "An old bronze coin", 50))
-npc_3.add_loot(Loot("Dungeon Key of Agility", "A key with a winged design", 50))
-npc_3.add_loot(dagger)
-room_6.add_npc(npc_3)
-
-npc_4: NPC = NPC("Arin the Sage", "A wise scholar with a book in hand and a thoughtful demeanor")
-npc_4.add_loot(Loot("Platinum Bracelet", "A shiny platinum bracelet", 150))
-npc_4.add_loot(Loot("Dungeon Key of Intelligence", "A key with a book symbol", 50))
-npc_4.add_loot(mace)
-room_8.add_npc(npc_4)
 
 loot_1: Loot = Loot("Silver Ring", "A shiny silver ring", 50)
 room_spawn.add_existing_item(loot_1)
@@ -300,11 +287,6 @@ player_1.collect_item(wooden_sword, True)
 player_1.weapon = wooden_sword
 
 
-room_3.add_existing_item(sword_1)
-room_5.add_existing_item(sword_2)
-room_7.add_existing_item(sword_3)
-room_9.add_existing_item(bow)
-room_11.add_existing_item(staff)
 
 class Game:
     def __init__(self, player: Player = None):
@@ -317,7 +299,7 @@ class Game:
         print_slow("In this game, you will explore various rooms, collect items, and interact with NPCs.")
         print_slow("Make sure to look for weapons in the rooms to help you in battles.")
         print_slow("Keep an eye out for keys, as they are essential to progress through the game.")
-        print_slow("Your ultimate goal is to reach Dungeon Cell 2, where you can merge the keys to unlock the final room and complete the game.")
+        print_slow(f"Your ultimate goal is to reach {room_12.name}, where you can merge the keys to unlock the final room and complete the game.")
         print_slow("Good luck!")
         print_slow("1. Start Game")
         print_slow("2. Exit Game")
@@ -336,6 +318,10 @@ class Game:
     def start_game(self):
         print("\nYou are in the Spawn room")
         while not self.game_over:
+            for i in range(len(self.player.inventory)):
+                if isinstance(self.player.inventory[i], Weapon):
+                    if self.player.inventory[i].damage > self.player.weapon.damage:
+                        self.player.weapon = self.player.inventory[i]
             if self.player.current_room != room_spawn:
                 print_slow(f"You are in {self.player.current_room.name} you have {self.player.hp} health remaining")
             print_slow("\nWhat would you like to do?")
@@ -344,8 +330,10 @@ class Game:
             print_slow("3. Collect item in room")
             print_slow("4. Show NPCs")
             print_slow("5. Quit game")
+            option_number = 6
             if self.player.current_room.check_npc():
-                print_slow("6. Talk to NPC\n")
+                print_slow(f"{option_number}. Talk to NPC\n")
+                option_number += 1
                 places = ["by the door", "in the corner", "in the middle", "leaning against the wall"]
                 random_place = random.choice(places)
                 print_slow(f"You see a figure {random_place} in the room")
@@ -390,14 +378,13 @@ class Game:
                     print_slow("3. Collect item in room")
                     print_slow("4. Show NPCs")
                     print_slow("5. Quit game")
-                    if self.player.current_room.check_npc():
-                        print_slow("6. Talk to NPC\n")
-                        places = ["by the door", "in the corner", "in the middle", "leaning against the wall"]
-                        random_place = random.choice(places)
-                        print_slow(f"You see a figure {random_place} in the room")
+                    option_number = 6
+
+
+
 
             if self.player.current_room == room_12:
-                print_slow("7. Merge keys")
+                print_slow(f"{option_number}. Merge keys")
             choice = input("\nEnter your choice: ")
             if choice == "1":
                 self.move()
@@ -409,10 +396,10 @@ class Game:
                 self.player.current_room.show_npc()
             elif choice == "5":
                 self.game_over = True
-            elif choice == "6":
+            elif choice == str(option_number - 1):
                 if self.player.current_room.check_npc():
                     self.talk_to_npc()
-            elif choice == "7":
+            elif choice == str(option_number):
                 if self.player.current_room == room_12:
                     keys = ["Dungeon Key of Wisdom", "Dungeon Key of Strength", "Dungeon Key of Agility", "Dungeon Key of Intelligence"]
                     missing_keys = [key for key in keys if key not in [item.name for item in self.player.inventory]]
@@ -444,8 +431,6 @@ class Game:
                             self.game_over = True
                 else:
                     print_slow("Invalid choice")
-
-
             else:
                 print_slow("Invalid choice")
 
@@ -453,11 +438,15 @@ class Game:
     def move(self):
         print_slow("Which direction would you like to move?")
         self.player.current_room.show_connected_rooms()
-        direction = input("Enter your choice: ")
-        if direction in self.player.current_room.connected_rooms:
+        directions = list(self.player.current_room.connected_rooms.keys())
+        for i, direction in enumerate(directions, start=1):
+            print_slow(f"{i}. {direction.capitalize()}")
+        choice = input("Enter the number of your choice: ")
+        if choice.isdigit() and 1 <= int(choice) <= len(directions):
+            direction = directions[int(choice) - 1]
             self.player.set_current_room(self.player.current_room.connected_rooms[direction])
         else:
-            print_slow("Invalid direction")
+            print_slow("Invalid choice")
 
 
     def check_inventory(self):
@@ -473,9 +462,12 @@ class Game:
     def check_and_collect_item(self):
         self.player.current_room.show_items()
         if self.player.current_room.items_in_room():
-            item_name = input("Enter the name of the item to collect: ")
-            for item in self.player.current_room.items:
-                if item.name.lower() == item_name.lower():
+            print_slow("Enter the number of the item to collect:")
+            for index, item in enumerate(self.player.current_room.items, start=1):
+                print_slow(f"{index}. {item.name}")
+            choice = input("Enter the number of the item to collect: ")
+            for index, item in enumerate(self.player.current_room.items, start=1):
+                if str(index) == choice:
                     self.player.collect_item(item)
                     print_slow(f"Collected {item.name}")
                     return
@@ -493,35 +485,39 @@ class Game:
         choice = input("Enter your choice: ")
         if choice == "1":
             loot_bought = False
-            choice = input("Enter the name of the item you would like to buy: ")
-            for loot in npc.loot:
-                if loot.name.lower() == choice.lower():
+            print_slow("Enter the number of the item you would like to buy:")
+            for index, loot in enumerate(npc.loot, start=1):
+                print_slow(f"{index}. {loot.name} worth {loot.value} coins")
+            choice = input("Enter the number of the item you would like to buy: ")
+            for index, loot in enumerate(npc.loot, start=1):
+                if str(index) == choice:
                     loot_bought = True
                     npc.buy_loot(loot, self.player)
-
+                    break
             if not loot_bought:
                 print_slow("Item not found")
         elif choice == "2":
             loot_sold = False
             print_slow("You have the following items to sell:")
-            for item in self.player.inventory:
+            for index, item in enumerate(self.player.inventory, start=1):
                 if isinstance(item, Loot):
-                    item.slow_print()
-            choice = input("Enter the name of the item you would like to sell: ")
-            for item in self.player.inventory:
-                if item.name.lower() == choice.lower() and isinstance(item, Loot):
+                    print_slow(f"{index}. {item.name} worth {item.value} coins")
+            choice = input("Enter the number of the item you would like to sell: ")
+            for index, item in enumerate(self.player.inventory, start=1):
+                if str(index) == choice and isinstance(item, Loot):
                     self.player.remove_item(item)
                     self.player.add_money(item.value)
                     npc.add_loot(item)
                     loot_sold = True
                     print_slow(f"{self.player.name} sold {item.name} for {item.value} coins")
+                    break
             if not loot_sold:
                 print_slow("Item not found")
         else:
             print_slow("Invalid choice")
-        print_slow(f"{npc.name}: Anything else?")
+        print_slow(f"{npc.name}: Anything else? (1 - Yes, 2 - No)")
         choice = input("Enter your choice: ")
-        if choice == "yes":
+        if choice == "1":
             self.talk_to_npc()
         else:
             print_slow("Goodbye")
