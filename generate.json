@@ -1,0 +1,245 @@
+{
+  "rooms": [
+    {
+      "name": "Spawn",
+      "description": "The starting room"
+    },
+    {
+      "name": "Hall of Echoes",
+      "description": "A hall where every sound is amplified"
+    },
+    {
+      "name": "Chamber of Whispers",
+      "description": "A chamber filled with eerie whispers"
+    },
+    {
+      "name": "Hall of Shadows",
+      "description": "A hall where shadows seem to move on their own"
+    },
+    {
+      "name": "Guard Room",
+      "description": "A room where guards once stood watch"
+    },
+    {
+      "name": "Armory",
+      "description": "A room filled with old weapons and armor"
+    },
+    {
+      "name": "Torture Chamber",
+      "description": "A room with old torture devices"
+    },
+    {
+      "name": "Storage Room",
+      "description": "A cluttered room filled with old supplies"
+    },
+    {
+      "name": "Alchemy Lab",
+      "description": "A room with various potions and alchemical equipment"
+    },
+    {
+      "name": "Control Room",
+      "description": "A room with old control panels and monitors"
+    },
+    {
+      "name": "Dungeon Cell 1",
+      "description": "A dark cell with iron bars"
+    },
+    {
+      "name": "Dungeon Cell 2",
+      "description": "A cell with broken chains and shackles"
+    },
+    {
+      "name": "Library of Secrets",
+      "description": "A room filled with ancient books and scrolls"
+    },
+    {
+      "name": "Crystal Cavern",
+      "description": "A cavern with walls covered in glowing crystals"
+    },
+    {
+      "name": "Throne Room",
+      "description": "A grand room with a majestic throne"
+    },
+    {
+      "name": "Enchanted Garden",
+      "description": "A garden with magical plants and flowers"
+    },
+    {
+      "name": "Forgotten Crypt",
+      "description": "A crypt with old tombs and eerie silence"
+    }
+  ],
+  "npcs": [
+    {
+      "name": "Gorath the Keeper",
+      "description": "A mysterious figure with a hooded cloak and piercing eyes"
+    },
+    {
+      "name": "Tharok the Mighty",
+      "description": "A towering warrior with bulging muscles and a fierce expression"
+    },
+    {
+      "name": "Lyra the Shadow",
+      "description": "A nimble rogue with quick reflexes and a mischievous grin"
+    },
+    {
+      "name": "Arin the Sage",
+      "description": "A wise scholar with a book in hand and a thoughtful demeanor"
+    },
+    {
+      "name": "Eldrin the Enchanter",
+      "description": "A wizard with a long beard and a staff glowing with magical energy"
+    },
+    {
+      "name": "Morgath the Dark",
+      "description": "A sinister figure with a dark aura and a menacing presence"
+    },
+    {
+      "name": "Fiora the Swift",
+      "description": "A quick and agile thief with a sharp mind and a sharper blade"
+    },
+    {
+      "name": "Borin the Brave",
+      "description": "A courageous knight with a shining armor and a noble heart"
+    },
+    {
+      "name": "Zara the Mystic",
+      "description": "A mysterious sorceress with a deep knowledge of ancient magic"
+    },
+    {
+      "name": "Karn the Berserker",
+      "description": "A fierce warrior with a wild look and a thirst for battle"
+    }
+  ],
+"items": [
+  {
+    "type": "Loot",
+    "name": "Gem",
+    "description": "A sparkling gem",
+    "value": 200
+  },
+  {
+    "type": "Loot",
+    "name": "Potion",
+    "description": "A healing potion",
+    "value": 75
+  },
+  {
+    "type": "Loot",
+    "name": "Scroll",
+    "description": "A scroll with ancient writings",
+    "value": 150
+  },
+  {
+    "type": "Loot",
+    "name": "Golden Crown",
+    "description": "A crown adorned with precious gems",
+    "value": 500
+  },
+  {
+    "type": "Loot",
+    "name": "Ancient Coin",
+    "description": "A rare coin from a lost civilization",
+    "value": 300
+  },
+  {
+    "type": "Loot",
+    "name": "Jeweled Dagger",
+    "description": "A dagger with a jeweled hilt",
+    "value": 250
+  }
+],
+"weapons": [
+  {
+    "type": "Weapon",
+    "name": "Excalibur",
+    "description": "A legendary sword with immense power",
+    "value": 500,
+    "damage": 50
+  },
+  {
+    "type": "Weapon",
+    "name": "Shadow Blade",
+    "description": "A dark sword that drains the life of its enemies",
+    "value": 300,
+    "damage": 35
+  },
+  {
+    "type": "Weapon",
+    "name": "Flame Sword",
+    "description": "A sword engulfed in flames",
+    "value": 400,
+    "damage": 45
+  },
+  {
+    "type": "Weapon",
+    "name": "Elven Bow",
+    "description": "A finely crafted bow with great accuracy",
+    "value": 250,
+    "damage": 30
+  },
+  {
+    "type": "Weapon",
+    "name": "Wizard's Staff",
+    "description": "A staff imbued with magical energy",
+    "value": 350,
+    "damage": 40
+  },
+  {
+    "type": "Weapon",
+    "name": "Battle Axe",
+    "description": "A heavy axe with a sharp blade",
+    "value": 200,
+    "damage": 25
+  },
+  {
+    "type": "Weapon",
+    "name": "Poison Dagger",
+    "description": "A small dagger coated with poison",
+    "value": 150,
+    "damage": 20
+  },
+  {
+    "type": "Weapon",
+    "name": "War Mace",
+    "description": "A spiked mace for crushing armor",
+    "value": 300,
+    "damage": 40
+  },
+  {
+    "type": "Weapon",
+    "name": "Thunder Hammer",
+    "description": "A hammer that strikes with the force of a thunderbolt",
+    "value": 450,
+    "damage": 55
+  },
+  {
+    "type": "Weapon",
+    "name": "Ice Spear",
+    "description": "A spear that freezes its target on impact",
+    "value": 350,
+    "damage": 45
+  },
+  {
+    "type": "Weapon",
+    "name": "Dragon Claw",
+    "description": "A claw weapon forged from dragon scales",
+    "value": 500,
+    "damage": 60
+  },
+  {
+    "type": "Weapon",
+    "name": "Vampire Fang",
+    "description": "A dagger that drains the life of its victims",
+    "value": 400,
+    "damage": 50
+  },
+  {
+    "type": "Weapon",
+    "name": "Phoenix Feather",
+    "description": "A magical staff that can revive its wielder",
+    "value": 600,
+    "damage": 30
+  }
+]
+}
