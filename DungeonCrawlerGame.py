@@ -1,6 +1,8 @@
 import sys
 import random
 import json
+import time 
+
 directions_map: dict[str:str] = {
     "up": "down",
     "down": "up",
@@ -233,7 +235,40 @@ room_11: Room = Room(random_rooms[9]['name'], random_rooms[9]['description'])
 room_12: Room = Room(random_rooms[10]['name'], random_rooms[10]['description'])
 room_13: Room = Room("Final Room", "A room with flickering torches", True, final_key)
 
+
+def random_connection():
+    return random.choice("left", "right", "up", "down")
 room_spawn.connect_room(room_2, "right")
+
+#randomly generate room connections
+room_no = 0
+print("Generating rooms...")
+time.sleep(1)
+while room_no != 13:
+    room_no += 1
+    if room_no == 1:
+        room_spawn.connect_room(room_2, "right")
+    else:
+        # List of rooms available for new connections (excluding room_spawn if desired)
+        available_rooms = [room_2, room_3, room_4, room_5, room_6, room_7, room_8, room_9, room_10, room_11, room_12]
+        # Pick a random parent room that still has available directions (max 4 connections)
+        parent_rooms = [r for r in available_rooms if len(r.connected_rooms) < 4]
+        if parent_rooms:
+            parent = random.choice(parent_rooms)
+            # Determine possible directions that are not already used by the parent
+            directions = [d for d in ["up", "down", "left", "right"] if d not in parent.connected_rooms]
+            if directions:
+                chosen_direction = random.choice(directions)
+                # Select a child room that is not already connected to the parent
+                child_options = [r for r in available_rooms if r != parent and r not in parent.connected_rooms.values()]
+                if child_options:
+                    child = random.choice(child_options)
+                    parent.connect_room(child, chosen_direction)
+            else:
+                # If the parent has no available directions, remove it from the available rooms
+                available_rooms.remove(parent)
+                room_no -= 1
+print("Done!")
 room_2.connect_room(room_3, "right")
 room_2.connect_room(room_4, "left")
 room_2.connect_room(room_5, "up")
